@@ -1,14 +1,22 @@
-import React from 'react'
+import Footer from '@/components/footer/Footer'
+import Hero from '@/components/hero/Hero'
+import Navbar from '@/components/navbar/Navbar'
 
-function Home() {
+
+export default function Home() {
   return (
-    <div className=''>
-      <h1>Welcome to My Next.js App</h1>
-      <p>This is a simple example of a Next.js application.</p>
-      <p>Feel free to explore and modify the code!</p>
-      <p>Happy coding!</p>  
+    // Full black screen
+    <div className="w-full min-h-screen bg-black text-white">
+
+      {/* Centered content with max width */}
+      <div className="mx-auto px-4">
+        <Navbar />
+        <div className="py-6">
+        <Hero/>
+        </div>
+        <Footer/>
+      </div>
+
     </div>
   )
 }
-
-export default Home

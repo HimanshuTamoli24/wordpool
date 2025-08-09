@@ -1,9 +1,12 @@
 import React from 'react'
+import Navbar from '../../components/navbar/Navbar';
 
-function page() {
+function wiki() {
   return (
-    <div>wiki freg</div>
+    <div className=' min-h-screen bg-black'>
+
+    </div>
   )
 }
 
-export default page
+export default wiki

@@ -2,9 +2,12 @@ import { wordToPageGenerator } from "@/Helper/allmodels";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-    const word = "i had bad day";
-    console.log(`Received request to generate article for word: "${word}"`);
+    const { searchParams } = new URL(request.url);
+    const word = searchParams.get("word");
 
+    if (!word) {
+        return new Response("Missing 'word' query parameter", { status: 400 });
+    }
     try {
         const result = await wordToPageGenerator(word);
         return new Response(result.join(""), {
