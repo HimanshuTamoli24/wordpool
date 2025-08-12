@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Input } from "../ui/input";
 import axios from "axios";
 import { toast } from "sonner";
+import { PlaceholdersAndVanishInput } from "../ui/InputAd";
 
 function Wiki() {
     const [input, setInput] = useState("");
@@ -31,33 +32,41 @@ function Wiki() {
     };
 
     return (
-        <div>
-            <div className="font-mono col-span-3 capitalize prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl min-h-[200px] max-h-[70vh] border">
+        <div className="flex flex-col h-screen relative ">
+            <div className="font-mono  capitalize prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl max-h-vh  border min-h-[500px] mt-3.5">
                 {data ? (
-                    <div className="text-xl uppercase whitespace-pre-wrap">
+                    <div className="text-sm uppercase whitespace-pre-wrap leading-8 tracking-widest">
                         <ReactMarkdown>{data}</ReactMarkdown>
                     </div>
                 ) : (
-                    <p className="text-gray-500 italic">Your generated content will appear here...</p>
+                    <p className="text-gray-500  min-h-full italic">Your generated content will appear here...</p>
                 )}
-            </div>
 
-            <div className="flex gap-x-2.5 items-center w-full mt-2">
-                <Input
-                    value={input}
+            </div>
+            {/* <div className="border-t border-white/20  px-2.5 "/> */} <div className="my-3.5">
+                <PlaceholdersAndVanishInput
+                    placeholders={[
+                        "Start anywhere",
+                        "Click to explore",
+                        "One word, many paths",
+                        "Tap and go deeper",
+                        "Follow the chain",
+                        "From here to anywhere",
+                        "Ideas in motion",
+                        "Jump between worlds",
+                        "Click. Learn. Repeat.",
+                        "One click away"
+                    ]
+
+                    }
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Type your prompt..."
-                    className="flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
-                            handleSend();
-                        }
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSend();
                     }}
                 />
-                <Button onClick={handleSend} variant="default" aria-label="Send prompt">
-                    <Send className="w-5 h-5" />
-                </Button>
+
+                
             </div>
         </div>
     );

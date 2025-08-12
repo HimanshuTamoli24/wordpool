@@ -173,3 +173,34 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
+
+.circular-text {
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 70px;       /* reduced from 200px */
+  height: 70px;      /* reduced from 200px */
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+}
+
+.circular-text span {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-size: 10px;    
+  transition: all 0.5s cubic-bezier(0, 0, 0, 1);
+}
+::selection {
+  background: rgba(255, 2, 2, 0.687); /* hot pink with transparency */
+  color: #fff; /* keep text white */
+  backdrop-filter: blur(6px); /* glass effect */
+  text-shadow: 0 0 6px rgba(77, 9, 223, 0.8); /* soft glow */
+}
+
