@@ -177,7 +177,7 @@ export function PlaceholdersAndVanishInput({
     return (
         <form
             className={cn(
-                "w-full relative max-w-xl mx-auto bg-black border border-white h-12 rounded-full overflow-hidden shadow transition duration-200"
+                "w-full relative max-w-xl mx-auto bg-black border border-white/20 h-12 rounded-full overflow-hidden shadow transition duration-200"
             )}
             onSubmit={handleSubmit}
         >
@@ -208,7 +208,7 @@ export function PlaceholdersAndVanishInput({
             <button
                 disabled={!value}
                 type="submit"
-                className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full border border-white bg-black disabled:opacity-40 transition duration-200 flex items-center justify-center cursor-pointer hover:bg-white/10"
+                className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full border border-[#6a2bd6bb] bg-black disabled:opacity-40 transition duration-200 flex items-center justify-center cursor-pointer hover:bg-[#540ed0]/10"
             >
                 <motion.svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +250,7 @@ export function PlaceholdersAndVanishInput({
                             key={`current-placeholder-${currentPlaceholder}`}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -15, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "linear" }}
+                            transition={{ duration: 0.9, ease: "linear" }}
                             className="text-gray-400 text-sm sm:text-base font-normal pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
                         >
                             {placeholders[currentPlaceholder]}

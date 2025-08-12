@@ -1,22 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Button } from "../ui/button";
-import { Send } from "lucide-react";
-import { Input } from "../ui/input";
 import axios from "axios";
 import { toast } from "sonner";
 import { PlaceholdersAndVanishInput } from "../ui/InputAd";
+import { TextHoverEffect } from "../ui/Spotlight";
 
 function Wiki() {
     const [input, setInput] = useState("");
     const [data, setData] = useState("");
 
+
     const getGeneratedData = async (word: string) => {
         try {
             const response = await axios.get(`/api/genrate?word=${encodeURIComponent(word)}`);
             setData(response.data);
-            toast.success("Data generated successfully");
         } catch (error) {
             console.error("Error fetching data:", error);
             toast.error("Failed to generate data");
@@ -32,18 +30,18 @@ function Wiki() {
     };
 
     return (
-        <div className="flex flex-col h-screen relative ">
-            <div className="font-mono  capitalize prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl max-h-vh  border min-h-[500px] mt-3.5">
+        <div className="flex flex-col  relative mb-6 ">
+            <div className="font-mono  capitalize prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl max-h-vh  max-h-96  min-h-[390px] mt-3.5">
                 {data ? (
                     <div className="text-sm uppercase whitespace-pre-wrap leading-8 tracking-widest">
                         <ReactMarkdown>{data}</ReactMarkdown>
                     </div>
                 ) : (
-                    <p className="text-gray-500  min-h-full italic">Your generated content will appear here...</p>
+                    <TextHoverEffect text="WordPool.." />
                 )}
 
             </div>
-            {/* <div className="border-t border-white/20  px-2.5 "/> */} <div className="my-3.5">
+            <div className="my-3.5">
                 <PlaceholdersAndVanishInput
                     placeholders={[
                         "Start anywhere",
@@ -66,7 +64,7 @@ function Wiki() {
                     }}
                 />
 
-                
+
             </div>
         </div>
     );
