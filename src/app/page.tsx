@@ -6,7 +6,7 @@ import ClickSpark from '@/components/ui/Spark'
 
 export default function Home() {
   return (
-    <div className="relative w-full min-h-screen bg-black text-white overflow-hidden">
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
       {/* Background effect behind everything */}
       <div className="absolute inset-0 -z-10 w-full h-full">
         <DarkVeil />

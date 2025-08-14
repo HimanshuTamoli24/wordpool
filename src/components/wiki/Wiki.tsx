@@ -1,46 +1,74 @@
 "use client";
-import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { PlaceholdersAndVanishInput } from "../ui/InputAd";
 import { TextHoverEffect } from "../ui/Spotlight";
+import LoadingLetters from "@/loading";
+
+const getGeneratedData = async (word: string) => {
+
+    const { data } = await axios.get(`/api/genrate?word=${encodeURIComponent(word)}`);
+    console.log("data", data)
+    if (typeof data === "string") {
+        return data.split(" ").filter(Boolean);
+    }
+    throw new Error("Unexpected API response");
+
+}
+
 
 function Wiki() {
-    const [input, setInput] = useState("");
-    const [data, setData] = useState("");
+    const [input, setInput] = useState("wordpool");
+    const [queryWord, setQueryWord] = useState(input);
+    const { data: words = [], isLoading, error } = useQuery({
+        queryKey: ["generatedData", queryWord],
+        queryFn: () => getGeneratedData(queryWord),
+        enabled: !!queryWord
+    });
 
+    const clickDelayRef = React.useRef<NodeJS.Timeout | null>(null);
 
-    const getGeneratedData = async (word: string) => {
-        try {
-            const response = await axios.get(`/api/genrate?word=${encodeURIComponent(word)}`);
-            setData(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            toast.error("Failed to generate data");
+    const handleWordClick = (word: string) => {
+        if (clickDelayRef.current) {
+            clearTimeout(clickDelayRef.current);
         }
+
+        clickDelayRef.current = setTimeout(() => {
+            setInput(word);
+            setQueryWord(word);
+        }, 500); // delay before actually fetching
     };
 
-    const handleSend = () => {
-        if (!input.trim()) {
-            toast.error("Please enter a prompt");
-            return;
-        }
-        getGeneratedData(input.trim());
-    };
-
+    if (error) {
+        toast.error( error.message||"Error fetching data");
+    }
     return (
-        <div className="flex flex-col  relative mb-6 ">
-            <div className="font-mono  capitalize prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl max-h-vh  max-h-96  min-h-[390px] mt-3.5">
-                {data ? (
-                    <div className="text-sm uppercase whitespace-pre-wrap leading-8 tracking-widest">
-                        <ReactMarkdown>{data}</ReactMarkdown>
+        <div className="flex flex-col relative sm:mb-20 mb-9">
+            <div className="font-mono prose prose-invert max-w-none overflow-y-auto p-4 rounded-xl max-h-96 min-h-[400px] sm:min-h-[500px] mt-3.5">
+                {isLoading ? <LoadingLetters /> : words.length ? (
+                    <div className="text-sm whitespace-pre-wrap leading-8 tracking-widest">
+                        {words.map((word, i) => (
+                            <span
+                                key={i}
+                                className="cursor-pointer animated-underline"
+                                onClick={() => handleWordClick(word)}
+                            >
+                                {word}
+                            </span>
+                        ))}
                     </div>
                 ) : (
-                    <TextHoverEffect text="WordPool.." />
+                    <div className="flex flex-col justify-center items-center w-full h-full">
+                        <TextHoverEffect text="WordPool." />
+                        <p className="mt-3 text-center text-gray-400 max-w-lg font-semibold tracking-wide">
+                            Search. Learn. Master. Words made simple.
+                        </p>
+                    </div>
                 )}
-
             </div>
+
             <div className="my-3.5">
                 <PlaceholdersAndVanishInput
                     placeholders={[
@@ -53,18 +81,14 @@ function Wiki() {
                         "Ideas in motion",
                         "Jump between worlds",
                         "Click. Learn. Repeat.",
-                        "One click away"
-                    ]
-
-                    }
+                        "One click away",
+                    ]}
                     onChange={(e) => setInput(e.target.value)}
                     onSubmit={(e) => {
                         e.preventDefault();
-                        handleSend();
+                        setQueryWord(input)
                     }}
                 />
-
-
             </div>
         </div>
     );

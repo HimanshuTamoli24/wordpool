@@ -211,3 +211,45 @@ body {
   background-color: #ddd;
   cursor: pointer;
 }
+.animated-underline {
+  position: relative;
+  cursor: pointer;
+  margin-right: 0.6em; /* More space between words */
+  color: inherit;
+}
+
+.animated-underline::after {
+  content: "";
+  position: absolute;
+  height: 2px; /* Thickness of underline */
+  background-color: currentColor;
+  bottom: -4px; /* Space between underline and word */
+  left: 50%;
+  width: 0;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  transform-origin: center;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+    background-color: rgba(6, 185, 21, 0.686);
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.animate-flip {
+  animation: flip 0.6s linear infinite;
+  display: inline-block;
+  transform-style: preserve-3d;
+}
