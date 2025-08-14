@@ -1,4 +1,5 @@
 "use client";
+import { Github, Twitter } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -7,20 +8,31 @@ export default function Footer() {
 
                 {/* Left section */}
                 <p className="text-gray-500 tracking-wide">
-                    © 2025 WordPool Inc. All rights reserved.
+                    © 2025 WordPool
                 </p>
 
                 {/* Right section - links */}
                 <nav className="flex items-center gap-5">
-                    {["Terms & Conditions", "Privacy Policy", "About"].map((link, i) => (
+                    <div className="flex items-center gap-8">
                         <a
-                            key={i}
-                            href="#"
-                            className="text-gray-500 hover:text-white transition-colors duration-200"
+                            href="https://github.com/HimanshuTamoli24"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                            className="hover:text-gray-300 transition hover:animate-caret-blink"
                         >
-                            {link}
+                            <Github className="w-5 h-5" />
                         </a>
-                    ))}
+                        <a
+                            href="https://x.com/imarnav24"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Twitter"
+                            className="hover:text-gray-300 transition hover:animate-caret-blink"
+                        >
+                            <Twitter className="w-5 h-5" />
+                        </a>
+                    </div>
                 </nav>
 
             </div>

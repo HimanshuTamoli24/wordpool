@@ -2,11 +2,6 @@
 import { Github, Twitter } from "lucide-react";
 import CircularText from "../ui/icon";
 
-const items = [
-    { label: "Home", href: "#" },
-    { label: "About", href: "#" },
-    { label: "Contact", href: "#" },
-];
 
 export default function Navbar() {
     return (
