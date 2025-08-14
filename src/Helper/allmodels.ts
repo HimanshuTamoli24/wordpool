@@ -117,6 +117,8 @@ export const generateAscii = async (topic: string): Promise<string> => {
         const parsed = JSON.parse(result.trim());
         return parsed.art || "";
     } catch (err) {
+        console.log("Error parsing JSON from Groq:", err);
+        console.log("Raw response from Groq:", result);
         throw new Error(`Invalid JSON from Groq: ${result}`);
     }
 };
